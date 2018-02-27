@@ -29,7 +29,9 @@ framework:
     http_method_override: true
     assets: ~
     php_errors:
-        log: true
+        log: 
+    templating:
+        engines: ['twig']
 
 # Twig Configuration
 twig:
@@ -65,3 +67,16 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+
+easy_admin:
+    entities:
+        - AppBundle\Entity\User
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
