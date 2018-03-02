@@ -12,7 +12,13 @@
         <style>
             @import url(http://fonts.googleapis.com/css?family=Roboto);
         </style>
-        {% block body %}{% endblock %}
+        {% block body %}
+            <div>
+                {% block fos_user_content %}
+
+                {% endblock fos_user_content %}
+            </div>
+        {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

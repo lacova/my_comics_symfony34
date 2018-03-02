@@ -5,17 +5,25 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use FOS\UserBundle\Controller\SecurityController as userBase;
 
-class DefaultController extends Controller
+class DefaultController extends userBase
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, AuthorizationCheckerInterface $authorizationChecker)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        // get the login error if there is one
+        if ($authorizationChecker->isGranted('ROLE_ADMIN')===false && $authorizationChecker->isGranted('ROLE_USER')===false) {
+            return $this->redirect('/login', 301);
+        } else if ($authorizationChecker->isGranted('ROLE_USER')===true) {
+            var_dump('hola');
+        } else {
+            return $this->redirect('/admin', 301);
+        }
     }
 }
