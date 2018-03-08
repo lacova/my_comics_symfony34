@@ -1,0 +1,7 @@
+AppBundle\DataContainer\CharacterDataContainer:
+    exclusion_policy: ALL
+    properties:
+        results:
+            expose: true
+            serialized_name: results
+            type: ArrayCollection<AppBundle\Entity\Character>
